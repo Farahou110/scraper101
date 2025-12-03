@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="text-center mb-12">
+    <h1 class="text-4xl font-bold text-slate-900 mb-4">Find the Best Prices</h1>
+    <p class="text-slate-500">Select a category to compare prices from Naivas & Jumia</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+    {% for cat in categories %}
+    <a href="/category/{{ cat.name }}" 
+       class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group text-center">
+        
+        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-emerald-50 flex items-center justify-center group-hover:bg-emerald-100 transition">
+            <span class="text-3xl">
+                {% if cat.name == 'Food' %}🍎{% elif cat.name == 'Electronics' %}🔌{% else %}🛠️{% endif %}
+            </span>
+        </div>
+        
+        <h3 class="text-2xl font-bold text-slate-800 mb-2">{{ cat.name }}</h3>
+        <p class="text-slate-500">{{ cat.count }} Items Tracked</p>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}

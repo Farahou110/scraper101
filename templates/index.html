@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="mb-8 flex justify-between items-center">
+    <div>
+        <h2 class="text-3xl font-bold text-slate-800">Market Averages</h2>
+        <p class="text-slate-500">Aggregated from Naivas, Quickmart, Jumia, Carrefour & Chandarana</p>
+    </div>
+    <form action="/" method="get" class="w-96">
+        <input type="text" name="q" value="{{ search_query }}" placeholder="Search items..." 
+               class="w-full pl-4 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-emerald-500">
+    </form>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for item in items %}
+    <div onclick="openModal('{{ item.name }}')" 
+         class="bg-white p-6 rounded-xl border shadow-sm hover:shadow-md cursor-pointer group">
+        
+        <div class="flex justify-between items-start mb-4">
+            <h3 class="text-lg font-bold text-slate-900">{{ item.name }}</h3>
+            <span class="bg-slate-100 text-xs px-2 py-1 rounded font-medium">{{ item.source_count }} Stores</span>
+        </div>
+
+        <div class="flex items-baseline gap-2 mb-2">
+            <span class="text-3xl font-extrabold text-slate-900">KSh {{ item.avg_price }}</span>
+            <span class="text-sm text-slate-500">avg</span>
+        </div>
+
+        <div class="text-xs text-slate-500">
+            Range: {{ item.min_price }} - {{ item.max_price }} KSh
+        </div>
+        <div class="text-xs text-emerald-600 mt-2 truncate">
+            Found in: {{ item.sources_list }}
+        </div>
+    </div>
+    {% else %}
+    <div class="col-span-full text-center py-12 text-slate-500">No items found. Run scraper.</div>
+    {% endfor %}
+</div>
+
+<div id="priceModal" class="fixed inset-0 bg-slate-900/60 hidden z-50 flex items-center justify-center p-4" onclick="if(event.target===this) closeModal()">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-3xl overflow-hidden">
+        <div class="p-6 border-b flex justify-between">
+            <h2 id="mTitle" class="text-2xl font-bold">Item</h2>
+            <button onclick="closeModal()">✕</button>
+        </div>
+        
+        <div class="p-6 overflow-y-auto max-h-[70vh]">
+            <div class="h-64 mb-6"><canvas id="chart"></canvas></div>
+
+            <h3 class="font-bold mb-3">Store Comparison</h3>
+            <div id="mSources" class="space-y-3"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+let chart;
+async function openModal(commName) {
+    document.getElementById('priceModal').classList.remove('hidden');
+    document.getElementById('mTitle').textContent = commName;
+    
+    const res = await fetch(`/api/compare/${commName}`);
+    const data = await res.json();
+
+    // Render Sources List
+    const list = document.getElementById('mSources');
+    list.innerHTML = data.sources.map(s => `
+        <div class="flex justify-between items-center p-3 border rounded-lg hover:bg-slate-50">
+            <div>
+                <span class="font-bold text-slate-800">${s.source}</span>
+                <p class="text-sm text-slate-600">${s.product_name}</p>
+                <p class="text-xs text-slate-400 italic">${s.description}</p>
+            </div>
+            <span class="text-lg font-bold text-emerald-600">KSh ${s.price}</span>
+        </div>
+    `).join('');
+
+    // Render Bar Chart
+    const ctx = document.getElementById('chart').getContext('2d');
+    if(chart) chart.destroy();
+    
+    // Dynamic Colors for bars
+    const bgColors = data.graph.labels.map(l => l==='Naivas'?'#ef4444':l==='Jumia'?'#f97316':'#3b82f6');
+
+    chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: data.graph.labels,
+            datasets: [{
+                label: 'Price (KSh)',
+                data: data.graph.prices,
+                backgroundColor: bgColors,
+                borderRadius: 6
+            }]
+        },
+        options: { 
+            responsive: true, 
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: { y: { beginAtZero: false } }
+        }
+    });
+}
+function closeModal() { document.getElementById('priceModal').classList.add('hidden'); }
+</script>
+{% endblock %}
