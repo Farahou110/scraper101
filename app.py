@@ -97,14 +97,14 @@ def check_specific_item():
 
     return render_template('check_item.html')
 
-# ... imports ...
+
 
 @app.route('/search-results')
 def search_results():
     query = request.args.get('q', '').strip()
     
     # 1. Fetch ALL history for this item (sorted by date)
-    # This allows us to plot a line graph of price changes over time
+   
     history = list(db.live_searches.find({"search_term": query}).sort("created_at", 1))
     
     if not history: 
@@ -127,8 +127,6 @@ def search_results():
         'best': min(current_results, key=lambda x: x['price'])
     }
 
-    # 4. Prepare LINE GRAPH Data (Time Series)
-    # We need to map dates to prices for EACH supermarket separately
     
     # Get all unique dates from the history
     dates = sorted(list(set(row['created_at'].strftime('%Y-%m-%d') for row in history)))
@@ -143,10 +141,10 @@ def search_results():
         # Create a lookup map: Date -> Price
         price_map = {d['created_at'].strftime('%Y-%m-%d'): d['price'] for d in source_data}
         
-        # Create the data array. If a date is missing for this store, use None (creates a gap in line)
+        # Create the data array. N/A if date is missing 
         data_points = [price_map.get(date, None) for date in dates]
         
-        # Only add this store to the graph if it has data
+        
         if any(p is not None for p in data_points):
             datasets.append({
                 'label': source,
