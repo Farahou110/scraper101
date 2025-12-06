@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-slate-900 dark:text-white">My Inventory</h1>
+        <p class="text-slate-500">Manage your stock levels and prices.</p>
+    </div>
+
+    <div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 mb-8">
+        <h3 class="font-bold text-lg mb-4 text-slate-800 dark:text-white">Add New Stock</h3>
+        <form action="/inventory" method="POST" class="flex gap-4">
+            <input type="text" name="name" placeholder="Item Name" required class="flex-1 p-2 rounded border">
+            <input type="number" name="quantity" placeholder="Qty" required class="w-24 p-2 rounded border">
+            <input type="number" name="price" placeholder="Price" required class="w-32 p-2 rounded border">
+            <button type="submit" class="bg-emerald-600 text-white px-6 py-2 rounded-lg hover:bg-emerald-700">Add</button>
+        </form>
+    </div>
+
+    <div class="bg-white dark:bg-slate-800 rounded-xl shadow-sm overflow-hidden">
+        <table class="w-full text-left border-collapse">
+            <thead class="bg-slate-50 dark:bg-slate-700 text-slate-500 dark:text-slate-300">
+                <tr>
+                    <th class="p-4">Item</th>
+                    <th class="p-4">Quantity</th>
+                    <th class="p-4">Unit Price</th>
+                    <th class="p-4">Total Value</th>
+                    <th class="p-4">Date Added</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+                {% for item in items %}
+                <tr class="text-slate-700 dark:text-slate-300">
+                    <td class="p-4 font-medium">{{ item.name }}</td>
+                    <td class="p-4">{{ item.quantity }}</td>
+                    <td class="p-4">KSh {{ item.price }}</td>
+                    <td class="p-4 font-bold">KSh {{ item.price * item.quantity }}</td>
+                    <td class="p-4 text-sm text-slate-500">{{ item.date_added.strftime('%Y-%m-%d') }}</td>
+                </tr>
+                {% else %}
+                <tr><td colspan="5" class="p-8 text-center text-slate-500">No inventory records found.</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

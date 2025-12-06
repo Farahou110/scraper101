@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-4xl mx-auto mt-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="space-y-6">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl p-6 text-center shadow-sm">
+            <div class="w-20 h-20 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl font-bold mx-auto mb-4">{{ user.name[0] }}</div>
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white">{{ user.name }}</h2>
+            <p class="text-slate-500 text-sm mb-6">{{ user.email }}</p>
+            <a href="/inventory" class="w-full bg-slate-900 text-white py-2.5 rounded-lg block">Manage Inventory</a>
+        </div>
+    </div>
+    <div class="md:col-span-2 space-y-8">
+        <div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4">New Notifications</h3>
+            <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden divide-y divide-slate-100 dark:divide-slate-700">
+                {% for notif in notifications %}
+                <div class="p-5 flex gap-4">
+                    <div class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center">✓</div>
+                    <div>
+                        <h4 class="font-bold text-slate-900 dark:text-white">{{ notif.title }}</h4>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm">{{ notif.message }}</p>
+                    </div>
+                </div>
+                {% else %}
+                <div class="p-8 text-center text-slate-500">No new price drops yet.</div>
+                {% endfor %}
+            </div>
+        </div>
+        <div>
+            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-4">Watchlist</h3>
+            <div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700">
+                <table class="w-full text-left text-sm text-slate-600 dark:text-slate-300">
+                    <thead class="bg-slate-50 dark:bg-slate-900/50">
+                        <tr><th class="p-4">Item</th><th class="p-4">Target</th><th class="p-4">Current</th><th class="p-4">Status</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for item in watching %}
+                        <tr class="border-t border-slate-100 dark:border-slate-700">
+                            <td class="p-4 font-medium">{{ item.item }}</td>
+                            <td class="p-4 font-bold">KSh {{ item.target }}</td>
+                            <td class="p-4">{{ item.current }}</td>
+                            <td class="p-4"><span class="px-2 py-1 rounded text-xs font-bold bg-amber-100 text-amber-700">{{ item.status }}</span></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

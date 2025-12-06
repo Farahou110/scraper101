@@ -15,9 +15,9 @@ mongo_uri ="mongodb://localhost:27017/"
 client = MongoClient(mongo_uri)
 db = client.get_default_database('commodity_price_tracker')
 
-# Clear existing data (Optional - comment out if you want to keep data)
-db.prices.delete_many({})
-print("🗑️  Cleared old data.")
+# # Clear existing data (Optional - comment out if you want to keep data)
+# db.prices.delete_many({})
+# print("🗑️  Cleared old data.")
 
 # Sample Data to Generate
 counties = ["Nairobi", "Mombasa", "Kisumu", "Nakuru"]

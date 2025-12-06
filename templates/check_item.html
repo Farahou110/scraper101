@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="max-w-2xl mx-auto mt-16 text-center">
+    <h1 class="text-4xl font-bold text-slate-900 dark:text-white mb-4">Check Live Market Prices</h1>
+    <div class="bg-white dark:bg-slate-800 rounded-2xl shadow-xl border border-slate-200 dark:border-slate-700 p-8 relative">
+        <div id="loader" class="hidden absolute inset-0 bg-white/90 dark:bg-slate-800/90 z-20 flex flex-col items-center justify-center">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mb-4"></div>
+            <p class="text-slate-500">Scraping Supermarkets...</p>
+        </div>
+        <form action="/check-specific-item" method="POST" onsubmit="document.getElementById('loader').classList.remove('hidden')">
+            <input type="text" name="item_name" placeholder="e.g. Sugar 1kg..." required class="w-full pl-6 pr-4 py-4 text-lg rounded-xl bg-slate-50 dark:bg-slate-900 border-2 border-slate-200 dark:border-slate-700 focus:border-emerald-500 outline-none transition text-slate-900 dark:text-white mb-6">
+            <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 rounded-xl shadow-lg transition">Check Prices</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,25 +1,50 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="text-center mb-12">
-    <h1 class="text-4xl font-bold text-slate-900 mb-4">Find the Best Prices</h1>
-    <p class="text-slate-500">Select a category to compare prices from Naivas & Jumia</p>
-</div>
+<div class="max-w-4xl mx-auto mt-16 text-center">
+    <h1 class="text-5xl font-extrabold text-slate-900 dark:text-white mb-6">
+        Welcome to <span class="text-emerald-600">Chakula Bei</span>
+    </h1>
+    <p class="text-xl text-slate-500 dark:text-slate-400 mb-12">
+        Compare commodity prices across Naivas, Jumia, and Carrefour in real-time.
+    </p>
 
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-    {% for cat in categories %}
-    <a href="/category/{{ cat.name }}" 
-       class="bg-white p-8 rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all group text-center">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         
-        <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-emerald-50 flex items-center justify-center group-hover:bg-emerald-100 transition">
-            <span class="text-3xl">
-                {% if cat.name == 'Food' %}🍎{% elif cat.name == 'Electronics' %}🔌{% else %}🛠️{% endif %}
-            </span>
-        </div>
-        
-        <h3 class="text-2xl font-bold text-slate-800 mb-2">{{ cat.name }}</h3>
-        <p class="text-slate-500">{{ cat.count }} Items Tracked</p>
-    </a>
-    {% endfor %}
+        <a href="/scrape-dashboard" 
+           class="bg-white dark:bg-slate-800 p-8 rounded-2xl border-2 border-slate-200 dark:border-slate-700 hover:border-emerald-500 hover:shadow-xl transition group relative overflow-hidden">
+            <div class="absolute inset-0 bg-emerald-50 dark:bg-emerald-900/10 opacity-0 group-hover:opacity-100 transition"></div>
+            <div class="relative z-10">
+                <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                    🔄
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Update Dashboard</h2>
+                <p class="text-slate-500 dark:text-slate-400">
+                    Refresh prices for all tracked categories (Food, Home, etc.) and view the general market trends.
+                </p>
+            </div>
+        </a>
+
+        <a href="/check-specific-item" 
+           class="bg-white dark:bg-slate-800 p-8 rounded-2xl border-2 border-slate-200 dark:border-slate-700 hover:border-blue-500 hover:shadow-xl transition group relative overflow-hidden">
+            <div class="absolute inset-0 bg-blue-50 dark:bg-blue-900/10 opacity-0 group-hover:opacity-100 transition"></div>
+            <div class="relative z-10">
+                <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">
+                    🔍
+                </div>
+                <h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Check Specific Item</h2>
+                <p class="text-slate-500 dark:text-slate-400">
+                    Looking for something specific? Search for any item now to find the best deal instantly.
+                </p>
+            </div>
+        </a>
+
+    </div>
+    
+    <div class="mt-12">
+        <a href="/dashboard" class="text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white underline">
+            Go directly to Dashboard Categories
+        </a>
+    </div>
 </div>
 {% endblock %}

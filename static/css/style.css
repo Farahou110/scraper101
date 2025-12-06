@@ -1,28 +1,25 @@
 /* 1. Import Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* --- YOUR REQUESTED STYLES --- */
-
-/* Custom styles to supplement Tailwind */
+/* 2. Global Resets & Fonts */
 body {
     font-family: 'Inter', sans-serif;
 }
 
-.flash-message {
-    transition: opacity 0.5s ease-in-out;
-}
-
-/* --- PRESERVED STYLES (Required for Dashboard & Dark Mode) --- */
-
-/* Smooth Theme Transitions */
-/* This makes the switch between Dark/Light mode gentle instead of instant */
-body, div, nav, a, button, input, span, p, h1, h2, h3 {
+/* 3. Smooth Theme Transitions */
+/* This ensures colors fade gently when you toggle the theme */
+body, div, nav, a, button, input, span, p, h1, h2, h3, h4, h5, h6 {
     transition-property: background-color, border-color, color, fill, stroke;
     transition-duration: 200ms;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Card Hover Effects (Used in Dashboard) */
+/* 4. Flash Messages Fade */
+.flash-message {
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* 5. Card Hover Effects (Used in Dashboard) */
 .card-hover {
     transition: all 0.2s ease-in-out;
 }
@@ -34,13 +31,30 @@ body, div, nav, a, button, input, span, p, h1, h2, h3 {
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
 }
 
-/* Custom Scrollbar (Polished Look) */
+/* 6. Custom Scrollbar (Polished Look) */
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
 }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-.dark ::-webkit-scrollbar-thumb { background: #475569; }
-.dark ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1; /* slate-300 */
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8; /* slate-400 */
+}
+
+/* Dark Mode Scrollbar */
+.dark ::-webkit-scrollbar-thumb {
+    background: #475569; /* slate-600 */
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #64748b; /* slate-500 */
+}
