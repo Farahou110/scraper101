@@ -1,8 +1,10 @@
 flask
-supabase
+pymongo
+dnspython
 python-dotenv
 requests
 selenium
 webdriver-manager
 google-generativeai
 statistics
+flask-login

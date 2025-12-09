@@ -118,7 +118,7 @@ def scrape_single_item(db, search_term, targets=None):
     results_count = 0
     
     if not targets:
-        targets = ['Naivas', 'Jumia', 'Carrefour']
+        targets = ['Naivas', 'Jumia', 'Carrefour']   
     
     try:
         # 1. Naivas (Updated URL)
