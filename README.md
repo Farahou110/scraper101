@@ -1,6 +1,5 @@
-# 🥬 Chakula Bei - AI-Powered Commodity Price Tracker
-
-**Chakula Bei** (Swahili for "Food Price") is an intelligent market intelligence platform that tracks and compares real-time commodity prices across major Kenyan retailers (**Naivas**, **Jumia**, **Carrefour**).
+# 🥬 **AI-Powered Commodity Price Tracker**
+This is an intelligent market intelligence platform that tracks and compares real-time commodity prices across major Kenyan retailers (**Naivas**, **Jumia**, **Carrefour**).
 
 Unlike traditional scrapers, this system uses **Google Gemini AI** to "read" e-commerce websites like a human, ensuring high accuracy even when website layouts change. It provides live price comparisons, historical trend analysis, and personalized price alerts.
 
